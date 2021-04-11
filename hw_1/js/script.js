@@ -56,27 +56,55 @@ const weeksAmount = 8;
 
     let rWeekPack = consumptionPerWeek / sheetsInReamPaper;
     let calcMin = rWeekPack * weeksAmount;
-    let r = calcMin.toFixed();
+    if ((calcMin ^ 0) === calcMin) {
+        var r = calcMin | 0;
+    }
+    if ((calcMin ^ 0) !== calcMin){
+        var r = (calcMin + 1) | 0;
+    }
+
 console.log(`min pack need: ${r}`);
 
 // 4*
 // Создать функцию, которая выведет в консоль номер этажа и номер подъезда по номеру квартиры.
 // Этажей у нас 9, квартир на этаже по 3
+// const roomsOnFloor = 3;
+// const floors = 9;
+// const roomNumber = 100;
+// function calcNumRoomOnPorchAndFloors() {
+//     let porch = Math.ceil(roomNumber / (floors * roomsOnFloor));
+//     let floor = roomNumber / roomsOnFloor;
+//     floor -= (porch -1) * floors;
+//     return console.log(` Квартира №: ${roomNumber} Подъезд ${porch} Этаж ${floor}`);
+//     // let roomOnPorch = floors * roomsOnFloor;
+//     // if(roomNumber % roomOnPorch != 0) {
+//     //     let porch = ((roomNumber / roomOnPorch) - ((roomNumber / roomOnPorch).toFixed()));
+//     //     return console.log(porch);
+//     // }
+// }
+
 const roomsOnFloor = 3;
 const floors = 9;
-const roomNumber = 100;
+const roomNumber = 108;
 function calcNumRoomOnPorchAndFloors() {
-    let porch = Math.ceil(roomNumber / (floors * roomsOnFloor));
-    let floor = roomNumber / roomsOnFloor;
-    floor -= (porch -1) * floors;
-    return console.log(` Квартира №: ${roomNumber} Подъезд ${porch} Этаж ${floor}`);
-    // let roomOnPorch = floors * roomsOnFloor;
-    // if(roomNumber % roomOnPorch != 0) {
-    //     let porch = ((roomNumber / roomOnPorch) - ((roomNumber / roomOnPorch).toFixed()));
-    //     return console.log(porch);
-    // }
+    const roomOnPorch = roomsOnFloor * floors;
+    let zeroPorch = roomNumber % roomOnPorch;
+    let porch = ((roomNumber - zeroPorch) / roomOnPorch) + 1;
+    let ostFloor = (zeroPorch % roomsOnFloor);
+        if(ostFloor < 3){
+           var floor = ((zeroPorch - ostFloor) / roomsOnFloor) + 1;
+        }
+        if(ostFloor % 3 == 0){
+          var floor = (zeroPorch / roomsOnFloor);
+            if (floor == 0) {
+                var floor = floors;
+            }
+        }
+        return console.log(`Подъезд: ${porch} Этаж: ${floor}`)
 }
 calcNumRoomOnPorchAndFloors();
+
+
 //     5**
 const medianNumber = 8;
 let i = 0;

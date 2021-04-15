@@ -14,7 +14,8 @@ const citiesAndCountries = {
 const result = [];
 for (let key in citiesAndCountries) {
     const item = key +' - это ' + citiesAndCountries[key];
-    result.push(item);
+    // result.push(item);
+    result[result.length] = item;
 }
 console.log(result);
 // const result = ['Киев - это Украина', 'Нью-Йорк - это США', ... и т.д.]
@@ -36,11 +37,14 @@ function getArray(amount){
     } else {
         for (let i = 1; i <= amount; i++) {
             if(i % 3 == 0) {
-                arrUnitItem.push(i);
-                arrUnit.push(arrUnitItem);
+                // arrUnitItem.push(i);
+                arrUnitItem[arrUnitItem.length] = i;
+                // arrUnit.push(arrUnitItem);
+                arrUnit[arrUnit.length] = arrUnitItem;
                 arrUnitItem = [];
             } else {
-                arrUnitItem.push(i)
+                // arrUnitItem.push(i)
+                arrUnitItem[arrUnitItem.length] = i;
             }
         }
         return console.log(arrUnit)
@@ -68,7 +72,8 @@ function minNumArr(arr) {
 
     for(let i = 0; i < arr.length; i++) {
         if(arr[i] >= 0 && (arr[i] ^ 0) == arr[i]) {
-            newArr.push(arr[i])
+            // newArr.push(arr[i])
+            newArr[newArr.length] = arr[i]
         }
     }
     for (let i = 0; i < newArr.length; i++) {

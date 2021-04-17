@@ -53,17 +53,18 @@ console.log(`${numFuctorial}! = ${sFuctorialFor(numFuctorial)}`);
 const sheetsInReamPaper = 500;
 const consumptionPerWeek = 1200;
 const weeksAmount = 8;
-
-    let rWeekPack = consumptionPerWeek / sheetsInReamPaper;
-    let calcMin = rWeekPack * weeksAmount;
-    if ((calcMin ^ 0) === calcMin) {
-        var r = calcMin | 0;
+let res = 0;
+let rWeekPack = consumptionPerWeek / sheetsInReamPaper;
+let minPackNeed = rWeekPack * weeksAmount;
+let ostD = minPackNeed % 1;
+    if(minPackNeed % 1 === 0) {
+        res = minPackNeed;
+    } else {
+        res = (minPackNeed - ostD) + 1;
     }
-    if ((calcMin ^ 0) !== calcMin){
-        var r = (calcMin + 1) | 0;
-    }
 
-console.log(`min pack need: ${r}`);
+
+console.log(`min pack need: ${res}`);
 
 // 4*
 // Создать функцию, которая выведет в консоль номер этажа и номер подъезда по номеру квартиры.
@@ -110,7 +111,8 @@ const medianNumber = 8;
 let i = 0;
 let j = 0;
 
-while (i < medianNumber) {
+
+for (let i = 0; i <= medianNumber - 1; i++) {
     let line = '';
     let star = '';
     for(j = 0; j < medianNumber - i - 1; j++) {
@@ -120,5 +122,4 @@ while (i < medianNumber) {
         star += '#';
     }
     console.log((line + star + line) + '  //' + (i + 1));
-    i++;
 }

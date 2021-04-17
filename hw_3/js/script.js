@@ -1,35 +1,35 @@
 // ----------task 1 Создать функцию - конструктор,
 // которая будет иметь внутри все свойства обьекта emplyee
 // из массива emplyeeArr;
-class Emplyee {
-    constructor({id, name, surname, salary, workExperience, isPrivileges, gender}) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.salary = salary;
-        this.workExperience = workExperience;
-        this.isPrivileges = isPrivileges;
-        this.gender = gender;
-
-    }
-    get fullInfo() {
-        return `id: ${this.id} name: ${this.name} surname: ${this.surname}`
-    }
-    set fullInfo({name, salary}) {
-        this.name = name;
-        this.salary = salary
-    }
-}
-const employeeObj = new Emplyee(emplyeeArr[0]);
-console.log(employeeObj);
-
 // ----------task 2
 // Добавить функции - конструктору метод (помним про prototype):
 // getFullName который вернет полное имя начиная с фамилии в виде
 // строки
-Emplyee.prototype.getFullName = function () {
-        return this.surname + ' ' + this.name;
-};
+class EmplyeeAsClass {
+    constructor(employee) {
+        for (let key in employee) {
+            this[key] = employee[key]
+        }
+
+    }
+    getFullName () {
+        return `${this.name} ${this.surname}`
+    }
+    get fullInfo() {
+        let res = '';
+        for (let key in employeeObj) {
+           res += `${key} - ${employeeObj[key]}, ` 
+        }
+        return res
+    }
+    set fullInfo(obj) {
+        for(let key in obj) {
+            if(key in this) this[key] = obj[key]
+        }
+    }
+}
+const employeeObj = new EmplyeeAsClass(emplyeeArr[0]);
+console.log(employeeObj);
 console.log(employeeObj.getFullName());
 
 // ----------task 3
@@ -37,7 +37,11 @@ console.log(employeeObj.getFullName());
 // содержаться те же обьекты, но созданные функцией - конструктором
 // Emploee. Новый массив должен содержать имя emplyeeConstructArr.
 let createEmployesFromArr = (arr) => {
-    return arr
+    let arrNewEmpl = [];
+    for (let employee of arr) {
+        arrNewEmpl[arrNewEmpl.length] = new EmplyeeAsClass(employee)
+    }
+    return arrNewEmpl;
 };
 const emplyeeConstructArr = createEmployesFromArr(emplyeeArr);
 console.log(emplyeeConstructArr);
@@ -47,8 +51,8 @@ console.log(emplyeeConstructArr);
 // каждого employee, содержащегося в emplyeeConstructArr;
 const getFullNamesFromArr = (arr) => {
     let newArrName = [];
-    for (let key in arr) {
-        newArrName[newArrName.length] = arr[key].name + ' ' + arr[key].surname
+    for (let key of arr) {
+        newArrName[newArrName.length] = key.getFullName();
     }
     return newArrName;
 };
@@ -89,7 +93,7 @@ const getRandomEmployee = (arr) => {
 console.log(getRandomEmployee(emplyeeConstructArr));
 
 // ----------task 7
-const employeeObj2 = new Emplyee(emplyeeArr[0]);
+const employeeObj2 = new EmplyeeAsClass(emplyeeArr[0]);
 console.log(employeeObj2);
 
 

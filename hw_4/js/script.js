@@ -96,7 +96,7 @@ class CustomString {
     }
     reverse (string) {
         // if (isNaN(string) == true) {
-        if ((typeof string) == 'string') {
+        if ((typeof string) === 'string') {
                 let str = ''
                 for(let i = string.length - 1; i >= 0; i--){
                     str +=string[i]
@@ -107,7 +107,7 @@ class CustomString {
         }
     }
     ucFirst (string) {
-       if (isNaN(string) == true) {
+       if (isNaN(string) === true) {
            let str = ''
            for(let i = 0; i < 1; i++) {
                str += string[i].toUpperCase()
@@ -121,19 +121,14 @@ class CustomString {
        }
     }
     ucWords (string) {
-        if (isNaN(string) == true) {
-            let str = '';
-            let arr = string.split(' ');
-            for(let value of arr) {
-            for(let i = 0; i < value.length; i++) {
-                if (i == 0) {
-                    str += ' ' + value[i].toUpperCase();
-                    continue;
-                }
-                str += value[i]
+        if (typeof string === 'string') {
+            let resultStr = '';
+            const wordsArr = string.split(' ');
+            for(const wordIndex in wordsArr) {
+                const word = wordsArr[wordIndex];
+                resultStr += `${word[0].toUpperCase()}${word.substring(1)}${Number(wordIndex) !== wordsArr.length - 1 ? ' ' : ''}`;
             }
-            }
-            return str
+            return resultStr;
         }  else {
             console.warn('Значение должно быть строкой')
         }
@@ -144,7 +139,6 @@ class CustomString {
 let myString = new CustomString();
 
 console.log(myString.reverse('Hello'))
-console.log(myString.reverse(3333))
 console.log(myString.ucFirst('vasya'))
 console.log(myString.ucWords('vasya hello string upper'))
 
@@ -159,30 +153,40 @@ class Validator {
 
     }
     checkIsEmail(str) {
-        let arr = str.split('@')
+        const arr = str.split('@')
         if(arr.length !== 2) return false
         if(arr[0].length < 3) return false
         if(arr[1].length < 3) return false
         return true;
     }
     checkIsDomain(str) {
-        let arr = str.split('.')
-        let domain = arr[arr.length - 1]
-        if(domain !== 'com') return false
-        return true
+        const arr = str.split('.')
+        const domain = arr[arr.length - 1];
+        return domain === 'com';
     }
-    checkIsDate(str) {
-        let arr = str.split('.')
-        let age = new Date().getFullYear() - arr[arr.length - 1];
-        if(arr.length !== 3) return false
-        if(arr[0] > 31 || arr[0] < 1) return false
-        if(arr[1] > 12 || arr[1] < 1) return false
-        if(age > 100 || age <= -1) return false
-        return true
+    checkIsDate(date) {
+        //-------------------- 1 вариант
+        // let arr = str.split('.')
+        // let age = new Date().getFullYear() - arr[arr.length - 1];
+        // if(arr.length !== 3) return false
+        // if(arr[0] > 31 || arr[0] < 1) return false
+        // if(arr[1] > 12 || arr[1] < 1) return false
+        // if(age > 100 || age <= -1) return false
+        // return true
+        //-------------------- 2 вариант
+        try {
+            const birthYear = new Date(date).getFullYear();
+            const currentYear = new Date().getFullYear();
+            const age = currentYear - birthYear;
+            return age >= 0 && age < 100;
+        } catch (e) {
+            return false;
+        }
+
     }
     checkIsPhone(str) {
-        let arr = str.split(' ')
-        let arrNum = arr[2].split('-')
+        const arr = str.split(' ')
+        const arrNum = arr[2].split('-')
         if(arr[0] !== '+38') return false
         if(arr[1].length !== 5) return false
         if(arr[2].length !== 9) return false
@@ -195,7 +199,7 @@ let validator = new Validator();
 
 console.log(validator.checkIsEmail('vasya.pupkin@gmail.com')); // true
 console.log(validator.checkIsDomain('google.com')); // true
-console.log(validator.checkIsDate('10.01.2021')); // true
+console.log(validator.checkIsDate('10.05.2020')); // true
 console.log(validator.checkIsPhone('+38 (066) 937-99-92')); // если код страны Украинский
 
 
